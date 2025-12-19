@@ -2,7 +2,13 @@
 
 A modern affiliate site built with Next.js 15, TypeScript, TailwindCSS, and Shadcn UI, powered by a headless WordPress backend via GraphQL.
 
-## 🚀 Features
+## 🚀 Quick Links
+
+- **[⚡ Quick Start](./QUICKSTART.md)** - Get running in 10 minutes
+- **[📖 Detailed Setup Guide](./SETUP.md)** - Step-by-step instructions
+- **[🔌 WordPress Plugin](./wordpress-plugin/)** - Auto-setup helper
+
+## ✨ Features
 
 - **Next.js 15** with App Router and Server Components
 - **TypeScript** for type safety
@@ -15,212 +21,204 @@ A modern affiliate site built with Next.js 15, TypeScript, TailwindCSS, and Shad
 
 ## 📋 Prerequisites
 
-Before you begin, ensure you have:
 - Node.js 18+ installed
-- A WordPress site with the following plugins:
-  - WPGraphQL
-  - WPGraphQL for ACF (Advanced Custom Fields)
-  - ACF Pro (for custom product fields)
+- A WordPress site (or local WordPress)
+- Basic familiarity with npm/git
 
-## 🛠️ Setup
-
-### 1. Clone the Repository
+## 🚀 Quick Installation
 
 ```bash
+# 1. Clone the repo
 git clone https://github.com/vincenthaywood/affiliate-site-headless.git
 cd affiliate-site-headless
-```
 
-### 2. Install Dependencies
-
-```bash
+# 2. Install dependencies
 npm install
-```
 
-### 3. Environment Variables
-
-Copy `.env.example` to `.env.local`:
-
-```bash
+# 3. Configure environment
 cp .env.example .env.local
-```
+# Edit .env.local with your WordPress URL
 
-Update the following variables in `.env.local`:
-
-```env
-NEXT_PUBLIC_WORDPRESS_API_URL=https://your-wordpress-site.com
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_SITE_NAME=Your Affiliate Site
-```
-
-### 4. WordPress Configuration
-
-#### Install Required Plugins
-
-1. **WPGraphQL** - Exposes WordPress data via GraphQL
-2. **WPGraphQL for ACF** - Adds ACF fields to GraphQL
-3. **ACF Pro** - For custom product fields
-
-#### Create ACF Field Group
-
-Create an ACF field group called "Affiliate Fields" with the following fields:
-
-- **price** (Number)
-- **comparePrice** (Number) - Optional
-- **affiliateLink** (URL)
-- **rating** (Number, 0-5)
-- **reviewCount** (Number)
-- **features** (Repeater → Text)
-- **pros** (Repeater → Text)
-- **cons** (Repeater → Text)
-- **buyButtonText** (Text) - e.g., "Check Price", "View Deal"
-
-Apply this field group to your "Products" post type.
-
-#### Create Products Post Type
-
-```php
-// Add to your theme's functions.php or custom plugin
-function create_product_post_type() {
-    register_post_type('product', array(
-        'labels' => array(
-            'name' => 'Products',
-            'singular_name' => 'Product',
-        ),
-        'public' => true,
-        'has_archive' => true,
-        'show_in_graphql' => true,
-        'graphql_single_name' => 'product',
-        'graphql_plural_name' => 'products',
-        'supports' => array('title', 'editor', 'excerpt', 'thumbnail', 'custom-fields'),
-        'taxonomies' => array('category', 'post_tag'),
-    ));
-}
-add_action('init', 'create_product_post_type');
-```
-
-### 5. Run Development Server
-
-```bash
+# 4. Run development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+**👉 See [QUICKSTART.md](./QUICKSTART.md) for complete 10-minute setup**
+
+## 📚 Documentation
+
+- **[QUICKSTART.md](./QUICKSTART.md)** - Get up and running fast
+- **[SETUP.md](./SETUP.md)** - Detailed setup with troubleshooting
+- **[wordpress-plugin/README.md](./wordpress-plugin/README.md)** - WordPress plugin guide
 
 ## 🏗️ Project Structure
 
 ```
-├── app/
+├── app/                     # Next.js pages and layouts
 │   ├── globals.css          # Global styles with Shadcn theme
 │   ├── layout.tsx           # Root layout with header/footer
 │   ├── page.tsx             # Home page
-│   └── products/
-│       └── [slug]/
-│           └── page.tsx     # Dynamic product pages
-├── components/
+│   └── products/[slug]/     # Dynamic product pages
+├── components/              # React components
 │   ├── ui/                  # Shadcn UI components
-│   │   ├── button.tsx
-│   │   └── card.tsx
-│   └── product-card.tsx     # Custom product card component
-├── lib/
-│   ├── types.ts             # TypeScript types
-│   ├── wordpress.ts         # WordPress GraphQL API functions
-│   └── utils.ts             # Utility functions
-├── .env.example             # Environment variables template
-├── next.config.ts           # Next.js configuration
-├── tailwind.config.ts       # Tailwind configuration
-└── tsconfig.json            # TypeScript configuration
+│   └── product-card.tsx     # Custom product component
+├── lib/                     # Utilities and API
+│   ├── types.ts             # TypeScript definitions
+│   ├── wordpress.ts         # WordPress GraphQL functions
+│   └── utils.ts             # Helper functions
+├── wordpress-plugin/        # WordPress setup helper
+│   └── headless-affiliate-setup.php
+└── [config files]           # Next.js, TypeScript, Tailwind
 ```
 
-## 🎨 Customization with AI IDE
+## 🎨 AI IDE Integration
 
-This project is designed to work seamlessly with AI IDEs like Cursor or Windsurf. The entire codebase is in your repository, making it easy for AI to:
+**This project is built for AI-powered development!**
 
-1. **Modify Design** - Change colors, layouts, and components
-2. **Add Features** - Create new page types, components, or functionality
-3. **Optimize SEO** - Update metadata and structured data
-4. **Customize Content** - Modify product display logic
+Your AI IDE (Cursor, Windsurf, etc.) can freely modify:
+- ✅ All design and styling
+- ✅ Component structure
+- ✅ Page layouts
+- ✅ New features
+- ✅ SEO optimization
 
-### Example AI Prompts:
-
+**Example prompts:**
 ```
-"Add a comparison table component to product pages"
-"Change the color scheme to use blue as primary color"
-"Add a newsletter signup section to the footer"
-"Create a category page that lists all products in a category"
-"Add breadcrumbs to all pages"
+"Change primary color to blue"
+"Add a comparison table to product pages"
+"Create a categories page"
+"Add newsletter signup to footer"
 ```
+
+WordPress just handles content - you have full control of the frontend!
+
+## 🔧 WordPress Setup (Required)
+
+### Install These Plugins:
+
+1. **WPGraphQL** - [Free](https://wordpress.org/plugins/wp-graphql/)
+2. **ACF Pro** - [Purchase](https://www.advancedcustomfields.com/pro/) ($49)
+3. **WPGraphQL for ACF** - [Free](https://github.com/wp-graphql/wpgraphql-acf)
+
+### Then Use Our Helper Plugin:
+
+Upload `wordpress-plugin/headless-affiliate-setup.php` to WordPress.
+
+**It automatically:**
+- ✅ Creates Products post type
+- ✅ Adds all ACF fields
+- ✅ Configures GraphQL
+- ✅ Sets up admin columns
+
+**👉 See [wordpress-plugin/README.md](./wordpress-plugin/README.md) for details**
 
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
 
-1. Push your code to GitHub
-2. Import your repository in Vercel
-3. Add environment variables in Vercel dashboard
+1. Push to GitHub
+2. Import in Vercel
+3. Add environment variables
 4. Deploy!
 
-### Other Platforms
+### Other Options
 
-This is a standard Next.js app and can be deployed to:
+Works with:
 - Netlify
 - AWS Amplify
 - Railway
-- Any Node.js hosting platform
+- Any Node.js host
 
-## 📊 WordPress Setup Options
+## 📊 Key Benefits
 
-### Hosting WordPress
+### For You
+✅ Full frontend control  
+✅ AI IDE friendly  
+✅ Type-safe TypeScript  
+✅ Fast hot reload  
 
-- **Shared Hosting** - Cheapest option (Bluehost, SiteGround)
-- **WP Engine** - Premium managed WordPress hosting
-- **DigitalOcean** - VPS with more control
-- **Local** - For development (LocalWP, XAMPP)
+### For Content
+✅ Familiar WordPress admin  
+✅ No rebuilds needed (ISR)  
+✅ Media library included  
+✅ WYSIWYG editor  
+
+### For Performance
+✅ Static generation  
+✅ Automatic image optimization  
+✅ Edge caching  
+✅ Incremental updates  
 
 ## 🔧 GraphQL Queries
 
-The app uses the following main queries:
+Main functions in `lib/wordpress.ts`:
 
-- `getProducts()` - Fetch all products
-- `getProductBySlug()` - Fetch single product
-- `getAllProductSlugs()` - Generate static paths
-- `getCategories()` - Fetch all categories
+- `getProducts()` - All products
+- `getProductBySlug()` - Single product
+- `getAllProductSlugs()` - For static generation
+- `getCategories()` - All categories
 - `searchProducts()` - Search functionality
 
-All queries are in `lib/wordpress.ts` and can be modified for your needs.
+Fully typed with TypeScript!
 
-## 🎯 Key Benefits
+## 💡 Common Use Cases
 
-### For Development
-- **Full Control** - All frontend code in your repo
-- **AI-Friendly** - Clear structure for AI IDE modifications
-- **Type Safe** - TypeScript throughout
-- **Fast Iteration** - Hot reload with Next.js
+### Modify Product Card Design
+```typescript
+// Edit: components/product-card.tsx
+// Your AI IDE can modify styling, layout, or data display
+```
 
-### For Content
-- **Easy Management** - Familiar WordPress admin
-- **No Rebuilds** - ISR keeps content fresh
-- **Media Library** - WordPress handles all images
-- **WYSIWYG** - Classic WordPress editor
+### Add New Page
+```typescript
+// Create: app/your-page/page.tsx
+// Follow existing patterns in app/page.tsx
+```
 
-### For Performance
-- **Static Generation** - Lightning-fast pages
-- **Image Optimization** - Automatic with Next.js
-- **Edge Caching** - Via Vercel Edge Network
-- **Incremental Updates** - Only rebuild what changed
+### Custom GraphQL Query
+```typescript
+// Edit: lib/wordpress.ts
+// Add new queries following existing examples
+```
 
-## 📝 License
+## 🐛 Troubleshooting
 
-MIT
+**Products not showing?**
+- Check `.env.local` has correct WordPress URL
+- Visit `https://your-site.com/graphql` (should work)
+- Ensure products are Published in WordPress
+
+**Images not loading?**
+- Update `next.config.ts` with your domain
+- Or use `hostname: "**"` for development
+
+**Need help?**
+- Check [SETUP.md](./SETUP.md) for detailed troubleshooting
+- Open a GitHub issue
+
+## 📝 Commands
+
+```bash
+npm run dev          # Development server
+npm run build        # Production build
+npm run start        # Start production server
+npm run lint         # Check code quality
+```
 
 ## 🤝 Contributing
 
-Contributions welcome! Please open an issue or submit a PR.
+Contributions welcome! Open an issue or submit a PR.
+
+## 📄 License
+
+MIT
 
 ## 💬 Support
 
-For issues or questions, please open a GitHub issue.
+Questions? Open a GitHub issue or check the documentation.
 
 ---
 
-Built with ❤️ using Next.js, WordPress, and AI
+**Built with ❤️ using Next.js, WordPress, and AI**
+
+⭐ Star this repo if you find it helpful!
